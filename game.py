@@ -64,101 +64,68 @@ def move(board, direction):
     if direction == 'left' or direction == 'right':
         rows = get_nonempty_rows(board) #for left and right
         if direction == 'left':
-            board = move_left(rows)
+            return move_up(rows)
         elif direction == 'right':
-            board = move_right(rows)
+            return move_down(rows)
     else:
         cols = get_nonempty_cols(board) #for up and down
         if direction == 'up':
             board = move_up(cols)
         elif direction == 'down':
             board = move_down(cols)
+        return transpose_board(board)
     return board
 
-
-def move_right(rows):
-    N = len(rows)
-    #Perform additions
-    for x in range(N):
-        offset = 0
-        for y in range(len(rows[x])-1, -1 , -1):
-            if y - offset <= 0: break
-            a = int(rows[x][y - offset])
-            b = int(rows[x][y - 1 - offset])
-            if a == b:
-                rows[x][y - offset] = str(a + b)
-                rows[x].pop(y - 1 - offset)
-                offset = offset + 1
-    for x in range(N):
-        row_buffer = N - len(rows[x])
-        for _ in range(row_buffer):
-            rows[x].insert(0,'x')
-    return rows
-
-def move_left(rows):
-    N = len(rows)
+def move_up(board):
+    """Handle movement: up/left"""
+    N = len(board)
     # Perform additions
     for x in range(N):
         offset = 0
-        for y in range(len(rows[x])-1):
-            a = int(rows[x][y + offset])
-            b = int(rows[x][y + 1 + offset])
+        for y in range(len(board[x])-1):
+            a = int(board[x][y + offset])
+            b = int(board[x][y + 1 + offset])
             if a == b:
-                rows[x][y + offset] = str(a + b)
-                rows[x].pop(y+1 + offset)
+                board[x][y + offset] = str(a + b)
+                board[x].pop(y+1 + offset)
                 offset = offset -1
     for x in range(N):
-        row_buffer = N - len(rows[x])
+        row_buffer = N - len(board[x])
         for _ in range(row_buffer):
-            rows[x].append('x')
-    return rows
+            board[x].append('x')
+    return board
 
-def move_up(cols):
-    N = len(cols)
+def move_down(board):
+    """Handle movement: right/down"""
+    N = len(board)
     #Perform additions
     for x in range(N):
         offset = 0
-        for y in range(len(cols[x])-1):
-            a = int(cols[x][y + offset])
-            b = int(cols[x][y + 1 + offset])
-            if a == b:
-                cols[x][y + offset] = str(a + b)
-                cols[x].pop(y + 1 + offset)
-                offset = offset - 1
-
-    for x in range(N):
-        col_buffer = N - len(cols[x])
-        for _ in range(col_buffer):
-            cols[x].append('x')
-    transposed_cols = [['']*N for _ in range(N)]
-    for x in range(N):
-        for y in range(N):
-            transposed_cols[x][y] = cols[y][x]
-    return transposed_cols
-
-def move_down(cols):
-    N = len(cols)
-    #Perform additions
-    for x in range(N):
-        offset = 0
-        for y in range(len(cols[x])-1, -1 , -1):
+        for y in range(len(board[x])-1, -1 , -1):
             if y - offset <= 0: break
-            a = int(cols[x][y - offset])
-            b = int(cols[x][y - 1 - offset])
+            a = int(board[x][y - offset])
+            b = int(board[x][y - 1 - offset])
             if a == b:
-                cols[x][y - offset] = str(a + b)
-                cols[x].pop(y - 1 - offset)
+                board[x][y - offset] = str(a + b)
+                board[x].pop(y - 1 - offset)
                 offset = offset + 1
     for x in range(N):
-        col_buffer = N - len(cols[x])
+        col_buffer = N - len(board[x])
         for _ in range(col_buffer):
-            cols[x].insert(0,'x')
-    transposed_cols = [['']*N for _ in range(N)]
+            board[x].insert(0,'x')
+    return board
+
+def transpose_board(board):
+    """
+    Handle transpose operations,
+    typically for the 'up' and 'down' directions.
+    """
+    N = len(board)
+    transposed_board = [['']*N for _ in range(N)]
     for x in range(N):
         for y in range(N):
-            transposed_cols[x][y] = cols[y][x]
-    return transposed_cols
-
+            transposed_board[x][y] = board[y][x]
+    return transposed_board
 
 
 from utils import *
