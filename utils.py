@@ -3,7 +3,6 @@ import random
 
 try:
     from tkinter import *
-    #Assigned to None because import was successful but $DISPLAY may not be set
     gui, GUI_runnable, = None, None
 except ImportError:
     gui, GUI_runnable, = False, False
@@ -61,6 +60,7 @@ def add_random(board):
     board[x][y] = '2'
 
 def get_empty_cells(board):
+    """"Get a list of coordinates of all cells that are empty"""
     empty = []
     N = len(board)
     for x in range(N):
@@ -80,6 +80,7 @@ def get_total_score(board):
     return total
 
 def get_nonempty_cols(board):
+    """"Get a list of all cells that are not empty, column-wise"""
     N = len(board)
     cols = []
     for x in range(N):
@@ -91,6 +92,7 @@ def get_nonempty_cols(board):
     return cols
 
 def get_nonempty_rows(board):
+    """"Get a list of all cells that are not empty, row-wise"""
     rows = []
     N = len(board)
     for x in range(N):
@@ -102,6 +104,7 @@ def get_nonempty_rows(board):
     return rows
 
 def get_cols(board):
+    """"Get a list of all cells, col-wise"""
     N = len(board)
     cols = []
     for x in range(N):
@@ -112,6 +115,7 @@ def get_cols(board):
     return cols
 
 def get_rows(board):
+    """"Get a list of all cells, row-wise"""
     rows = []
     N = len(board)
     for x in range(N):
@@ -161,22 +165,22 @@ def check_rows(board, direction):
     elif direction == 'left':
         return check_up(rows)
 
-def check_down(cols):
-    N = len(cols)
+def check_down(board):
+    N = len(board)
     for x in range(N):
         for y in range(N):
-            if cols[x][y] != 'x':
+            if board[x][y] != 'x':
                 for i in range(y+1, N, 1):
-                    if cols[x][i] == 'x': return True
+                    if board[x][i] == 'x': return True
     return False
 
-def check_up(cols):
-    N = len(cols)
+def check_up(board):
+    N = len(board)
     for x in range(N):
         for y in range(N):
-            if cols[x][y] != 'x':
+            if board[x][y] != 'x':
                 for i in range(y, -1, -1):
-                    if cols[x][i] == 'x': return True
+                    if board[x][i] == 'x': return True
     return False
 
 def check_empty_board(board):
@@ -194,20 +198,20 @@ class gui_2048(Frame):
     def __init__(self,master = None):
         Frame.__init__(self,master)
 
-        #Background and font colors for each number upto 8192.
+        #Background and font colors for each number up to 8192.
         self.background_color = {'2':'#EBE1D7','4':'#ECE0CA','8':'#F4B176','16':'#F7975C','32':'#FA7961','64':'#F2613C','128':'#EBE899','256':'#F0D069','512':'#EBE544','1024':'#EAC80D','2048':'#F4FC08','4096':'#A4FC0D','8192':'#FC0D64'}
         self.foreground_color = {'2':'#857865','4':'#857865','8':'#FDF5E9','16':'#FDF5E9','32':'#FDF5E9','64':'#FDF5E9','128':'#FDF5E9','256':'#FDF5E9','512':'#FDF5E9','1024':'#FDF5E9','2048':'#FDF5E9','4096':'#FDF5E9','8192':'#FDF5E9'}
 
-        #support window resizing
+        #Support window resizing
         self.grid(sticky = N+S+E+W)
 
         #Adding the size of the board to create. This may be changed anytime to get a different sized board
         self.board_size = 4
 
-        #matrix_numbers is a list of frames (N x N frames) where N is board_size
+        #Matrix_numbers is a list of frames (N x N frames) where N is board_size
         self.matrix_numbers = list()
 
-        #initializing the GUI without any numbers (Starting point)
+        #Initializing the GUI without any numbers (Starting point)
         self.create_grid(self.board_size)
 
 

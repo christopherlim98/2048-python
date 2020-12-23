@@ -1,6 +1,5 @@
 import sys
 def main():
-    # Initialise game
     board = initialise_board()
     print_board(board)
 
@@ -25,12 +24,15 @@ def main():
         print_board(board)
 
 def initialise_board():
+    """Initialise a 4 x 4 board"""
     board = make_board(4)
+    # Add the start of the game, there will be 2 random squares
     for _ in range(2):
         add_random(board)
     return board
 
 def check_direction(key):
+    """Check direction of getch key press"""
     if (key == 68 or key == 97): #left
         return 'left'
     elif (key == 67 or key == 100): #right
@@ -43,6 +45,7 @@ def check_direction(key):
         return 'invalid'
 
 def play_new_game():
+    """Prints game over and asks player if they want to continue"""
     clear()
     print('''Game over.
             Press 'enter' to continue.
@@ -57,8 +60,9 @@ def play_new_game():
 
 
 def move(board, direction):
+    """Move the board pieces in the desired direction"""
     if direction == 'left' or direction == 'right':
-        rows = get_nonempty_rows(board)
+        rows = get_nonempty_rows(board) #for left and right
         if direction == 'left':
             board = move_left(rows)
         elif direction == 'right':
