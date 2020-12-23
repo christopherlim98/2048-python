@@ -6,10 +6,10 @@ This project uses python installer's Tkinter package to create the GUI front end
 ![Alt Text](https://media.giphy.com/media/dM8elN941J6EfNsWT4/giphy.gif)
 
 #### Installation (optional, but recommended)
-  pip install getch
+    pip install getch
  
 #### Running the game
-  python3 game.py
+    python3 game.py
 
 #### Acknowledgements
 Getch: https://code.activestate.com/recipes/134892/ </br>
