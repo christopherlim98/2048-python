@@ -12,4 +12,5 @@ This project uses python installer's Tkinter package to create the GUI front end
   python3 game.py
 
 #### Acknowledgements
-Getch and Tkinter https://github.com/kmishra9/2048-Starter
+Getch: https://code.activestate.com/recipes/134892/ </br>
+Tkinter: https://github.com/kmishra9/2048-Starter
